@@ -27,6 +27,18 @@ Plug 'psf/black'
 " Go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } 
 
+" terraform
+Plug 'hashivim/vim-terraform'
+
+" Javascript
+Plug 'pangloss/vim-javascript'
+
+" Typescript
+Plug 'leafgarland/typescript-vim'
+
+" React
+Plug 'maxmellon/vim-jsx-pretty'
+
 " Initialize plugin system
 call plug#end()
 
@@ -60,3 +72,7 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0# indentke
 
 " Go formatting + imports
 let g:go_fmt_command = "goimports"
+
+" terraformat on save
+let g:terraform_fmt_on_save=1
+
