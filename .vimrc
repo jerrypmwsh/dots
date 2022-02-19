@@ -7,7 +7,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'preservim/nerdtree'
 
 " file search
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
 
 " Git gutter
 Plug 'airblade/vim-gitgutter'
@@ -29,9 +29,10 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " terraform
 Plug 'hashivim/vim-terraform'
+Plug 'yorinasub17/vim-terragrunt'
 
 " Javascript
-Plug 'pangloss/vim-javascript'
+Plug 'yuezk/vim-js'
 
 " Typescript
 Plug 'leafgarland/typescript-vim'
@@ -39,8 +40,16 @@ Plug 'leafgarland/typescript-vim'
 " React
 Plug 'maxmellon/vim-jsx-pretty'
 
+" fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 " Initialize plugin system
 call plug#end()
+
+" remap leader key to space
+let mapleader = " " " map leader to Space
+map <leader>t :GoTest<CR>
 
 :set relativenumber
 
@@ -76,3 +85,42 @@ let g:go_fmt_command = "goimports"
 " terraformat on save
 let g:terraform_fmt_on_save=1
 
+
+" ######### Editor Settings
+
+" set the ctags file
+set tags=./tags,tags;$HOME
+
+" sets a line for the max line length
+au BufRead,BufNewFile *.py setlocal colorcolumn=79
+au BufRead,BufNewFile *.py setlocal textwidth=79
+
+
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', '.venv', 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json']
+if exists($VIRTUAL_ENV)
+    call coc#config('python', {
+    \   'pythonPath': $VIRTUAL_ENV . '/bin/python'
+    \ })
+endif
+
+nnoremap <leader>H :<C-u>execute "!pydoc3 " . expand("<cword>")<CR>
+
+" Go
+"
+" Run goimports instead of gofmt on save
+let g:go_fmt_command = "goimports"
+
+" fzf
+set rtp+=/opt/homebrew/opt/fzf
+
+map <C-p> :GFiles<CR>
+
+" Prettier for js
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" Code stuff
+nmap <leader>do <Plug>(coc-codeaction)
+nmap <leader>rn <Plug>(coc-rename)
+
+nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
